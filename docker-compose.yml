@@ -26,10 +26,3 @@ services:
       - "55000:55000"
 #    volumes:
 #      - ./db2/data:/database
-  flyway-db2:
-    image: boxfuse/flyway:5.2.4
-    command: -url=jdbc:db2://db2:50000/testdb -schemas=public -user=db2inst1 -password=password -connectRetries=60 migrate
-    volumes:
-      - ./db2/flyway:/flyway/sql
-    depends_on:
-      - db2
