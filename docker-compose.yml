@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db2:
+    image: store/ibmcorp/db2_developer_c:11.1.4.4-x86_64
+    privileged: true
+    restart: always
+    environment:
+      - LICENSE=accept
+      - DB2INSTANCE=db2inst1
+      - DB2INST1_PASSWORD=password
+      - DBNAME=testdb
+      - BLU=false
+      - ENABLE_ORACLE_COMPATIBILITY=false
+      - UPDATEAVAIL=NO
+      - TO_CREATE_SAMPLEDB=false
+      - REPODB=false
+      - IS_OSXFS=false
+      - PERSISTENT_HOME=true
+      - HADR_ENABLED=false
+      - ETCD_ENDPOINT=
+      - ETCD_USERNAME=
+      - ETCD_PASSWORD= 
+    ports:
+      - "60000:50000" # Windows can't bind to port 50000... https://github.com/docker/for-win/issues/3188
+      - "55000:55000"
+#    volumes:
+#      - ./db2/data:/database
+  flyway-db2:
+    image: boxfuse/flyway:5.2.4
+    command: -url=jdbc:db2://db2:50000/testdb -schemas=public -user=db2inst1 -password=password -connectRetries=60 migrate
+    volumes:
+      - ./db2/flyway:/flyway/sql
+    depends_on:
+      - db2

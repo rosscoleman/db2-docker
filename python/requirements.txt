@@ -1,0 +1,4 @@
+future==0.17.1
+ibm-db==3.0.1
+ibm-db-sa==0.3.4
+pandas==0.24.2
