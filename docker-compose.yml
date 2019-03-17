@@ -22,7 +22,7 @@ services:
       - ETCD_USERNAME=
       - ETCD_PASSWORD= 
     ports:
-      - "60000:50000" # Windows can't bind to port 50000... https://github.com/docker/for-win/issues/3188
+      - "60000:50000" # Windows 10 can't bind to port 50000... https://github.com/docker/for-win/issues/3188
       - "55000:55000"
 #    volumes:
 #      - ./db2/data:/database
